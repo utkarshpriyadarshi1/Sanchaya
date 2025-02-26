@@ -65,6 +65,23 @@ This project is a file management system built using Spring MVC. It allows users
     mvn clean install
     ```
 
+
+    This project setup includes:
+
+A pom.xml file for Maven dependencies.
+Application properties for PostgreSQL configuration.
+Webpack configuration for bundling JavaScript and CSS files, including Bootstrap.
+Basic Spring Boot application setup with a home controller and Thymeleaf template.
+Entity classes for Role, User, Category, SubCategory, and File.
+To get started with this project, follow these steps:
+
+Clone the repository or create a new directory and initialize it as a git repository.
+Create a PostgreSQL database named edastavej and update the application.properties file with your database credentials.
+Install Node.js and npm if you haven't already, and run npm install to install Webpack and Bootstrap.
+Build the project using Maven with the command mvn clean install.
+Run the Spring Boot application with the command mvn spring-boot:run.
+Access the application at http://localhost:8080.
+
 6. Deploy the WAR file to your favorite servlet container (e.g., Tomcat).
 
 7. Access the application at `http://localhost:8080/e-Dastavej`.
