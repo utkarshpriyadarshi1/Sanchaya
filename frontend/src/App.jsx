@@ -7,8 +7,6 @@ function App() {
   const [categories, setCategories] = useState([]);
 
   // Workstation and Backup State
-  const [users, setUsers] = useState([]);
-  const [roles, setRoles] = useState([]);
   const [backupHistory, setBackupHistory] = useState([]);
   const [backupLogs, setBackupLogs] = useState([]);
   const [isBackingUp, setIsBackingUp] = useState(false);
@@ -18,12 +16,6 @@ function App() {
   const [fileMetadata, setFileMetadata] = useState([]);
   const [selectedFileMeta, setSelectedFileMeta] = useState(null);
   const [expandedFolders, setExpandedFolders] = useState({}); // key: folderPath, value: boolean
-
-  // User Management Forms
-  const [newUserUsername, setNewUserUsername] = useState("");
-  const [newUserPassword, setNewUserPassword] = useState("");
-  const [newUserRoleId, setNewUserRoleId] = useState("");
-  const [newRoleName, setNewRoleName] = useState("");
 
   // Upload Form State
   const [uploadFile, setUploadFile] = useState(null);
@@ -62,16 +54,6 @@ function App() {
       .catch(err => console.error("Error fetching files:", err));
   };
 
-  const fetchAdminData = () => {
-    fetch("http://localhost:8080/api/admin/dashboard")
-      .then(res => res.json())
-      .then(data => {
-        if (data.users) setUsers(data.users);
-        if (data.roles) setRoles(data.roles);
-      })
-      .catch(err => console.error("Error fetching admin data:", err));
-  };
-
   const fetchBackupHistory = () => {
     fetch("http://localhost:8080/api/backup/history")
       .then(res => res.json())
@@ -96,7 +78,6 @@ function App() {
   const syncAllData = () => {
     fetchCategories();
     fetchFiles();
-    fetchAdminData();
     fetchBackupHistory();
     fetchStorageStats();
     fetchFileMetadata();
@@ -104,7 +85,7 @@ function App() {
 
   // Test backend connectivity and fetch initial data
   useEffect(() => {
-    fetch("http://localhost:8080/login", { method: "HEAD" })
+    fetch("http://localhost:8080/api/files/all", { method: "HEAD" })
       .then(() => {
         setBackendConnected(true);
         syncAllData();
@@ -121,15 +102,6 @@ function App() {
           { id: 1, fileName: "annual_report_2026.pdf", fileType: "application/pdf", fileSize: 1048576, category: "Finance", subCategory: "Reports", uploadDate: "2026-05-25" },
           { id: 2, fileName: "office_layout.png", fileType: "image/png", fileSize: 2048576, category: "Operations", subCategory: "Blueprints", uploadDate: "2026-05-24" },
           { id: 3, fileName: "terms_and_conditions.docx", fileType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileSize: 512000, category: "Legal", subCategory: "Contracts", uploadDate: "2026-05-23" }
-        ]);
-        setUsers([
-          { id: 1, username: "admin", roles: [{ id: 1, name: "ADMIN" }] },
-          { id: 2, username: "manager_user", roles: [{ id: 2, name: "MANAGER" }] }
-        ]);
-        setRoles([
-          { id: 1, name: "ADMIN" },
-          { id: 2, name: "MANAGER" },
-          { id: 3, name: "STAFF" }
         ]);
         setBackupHistory([
           { id: 1, backupPath: "backups/backup_1716682490123", timestamp: "2026-05-25T12:00:00", status: "SUCCESS" }
@@ -149,74 +121,7 @@ function App() {
       });
   }, []);
 
-  // User CRUD Handlers
-  const handleCreateUser = (e) => {
-    e.preventDefault();
-    if (!newUserUsername.trim() || !newUserPassword.trim() || !newUserRoleId) return;
 
-    if (!backendConnected) {
-      // Mock mode
-      const selectedRole = roles.find(r => r.id === parseInt(newUserRoleId));
-      const newUser = {
-        id: Date.now(),
-        username: newUserUsername.trim(),
-        roles: selectedRole ? [selectedRole] : []
-      };
-      setUsers([...users, newUser]);
-      setNewUserUsername("");
-      setNewUserPassword("");
-      setNewUserRoleId("");
-      return;
-    }
-
-    const params = new URLSearchParams();
-    params.append("username", newUserUsername.trim());
-    params.append("password", newUserPassword.trim());
-    params.append("role", newUserRoleId);
-
-    fetch("http://localhost:8080/api/users/admin/createUser", {
-      method: "POST",
-      body: params
-    })
-      .then(res => res.json())
-      .then(() => {
-        setNewUserUsername("");
-        setNewUserPassword("");
-        setNewUserRoleId("");
-        fetchAdminData();
-      })
-      .catch(err => console.error("Error creating user:", err));
-  };
-
-  const handleCreateRole = (e) => {
-    e.preventDefault();
-    if (!newRoleName.trim()) return;
-
-    if (!backendConnected) {
-      // Mock mode
-      const newRole = {
-        id: Date.now(),
-        name: newRoleName.trim().toUpperCase()
-      };
-      setRoles([...roles, newRole]);
-      setNewRoleName("");
-      return;
-    }
-
-    const params = new URLSearchParams();
-    params.append("roleName", newRoleName.trim().toUpperCase());
-
-    fetch("http://localhost:8080/api/users/admin/createRole", {
-      method: "POST",
-      body: params
-    })
-      .then(res => res.json())
-      .then(() => {
-        setNewRoleName("");
-        fetchAdminData();
-      })
-      .catch(err => console.error("Error creating role:", err));
-  };
 
   // WebSocket Backup progress handler
   const handleStartBackup = () => {
@@ -700,17 +605,7 @@ function App() {
                 <span className="text-base">📁</span>
                 <span className="text-sm">Category Master</span>
               </button>
-              <button
-                onClick={() => setActiveTab("users")}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
-                  activeTab === "users"
-                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20 font-semibold"
-                    : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-200"
-                }`}
-              >
-                <span className="text-base">👤</span>
-                <span className="text-sm">User Management</span>
-              </button>
+
               <button
                 onClick={() => setActiveTab("backup")}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
@@ -1395,147 +1290,6 @@ function App() {
                     <p className="text-xs text-slate-600 mt-1">Use the "Create New Category" form above to initialize classifications.</p>
                   </div>
                 )}
-              </div>
-            </div>
-          )}
-
-          {/* User Management Tab */}
-          {activeTab === "users" && (
-            <div className="space-y-8 animate-fadeIn">
-              <div>
-                <h2 className="text-3xl font-extrabold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-                  User & Access Management
-                </h2>
-                <p className="text-slate-400 mt-1">Register local system operators and simulate role-based authorization rules.</p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Left Column Forms */}
-                <div className="space-y-6">
-                  
-                  {/* Create User Form */}
-                  <div className="bg-slate-900/30 border border-slate-800/80 p-6 rounded-2xl backdrop-blur-md">
-                    <h3 className="font-bold text-sm text-slate-300 uppercase tracking-wider mb-4">Create System User</h3>
-                    <form onSubmit={handleCreateUser} className="space-y-4">
-                      <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-450 mb-1.5">Username</label>
-                        <input
-                          type="text"
-                          placeholder="e.g. jane_doe"
-                          value={newUserUsername}
-                          onChange={(e) => setNewUserUsername(e.target.value)}
-                          className="w-full bg-slate-955 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-slate-200"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-455 mb-1.5">Password</label>
-                        <input
-                          type="password"
-                          placeholder="••••••••"
-                          value={newUserPassword}
-                          onChange={(e) => setNewUserPassword(e.target.value)}
-                          className="w-full bg-slate-955 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-slate-200"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-455 mb-1.5">Assigned Role</label>
-                        <select
-                          value={newUserRoleId}
-                          onChange={(e) => setNewUserRoleId(e.target.value)}
-                          className="w-full bg-slate-955 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-slate-300"
-                          required
-                        >
-                          <option value="">Select Role</option>
-                          {roles.map(role => (
-                            <option key={role.id} value={role.id}>{role.name}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <button
-                        type="submit"
-                        className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-indigo-600/20 uppercase tracking-wider"
-                      >
-                        Save User
-                      </button>
-                    </form>
-                  </div>
-
-                  {/* Create Role Form */}
-                  <div className="bg-slate-900/30 border border-slate-800/80 p-6 rounded-2xl backdrop-blur-md">
-                    <h3 className="font-bold text-sm text-slate-300 uppercase tracking-wider mb-4">Create System Role</h3>
-                    <form onSubmit={handleCreateRole} className="flex gap-4">
-                      <input
-                        type="text"
-                        placeholder="Role Name (e.g. AUDITOR)"
-                        value={newRoleName}
-                        onChange={(e) => setNewRoleName(e.target.value)}
-                        className="flex-1 bg-slate-955 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-slate-200"
-                        required
-                      />
-                      <button
-                        type="submit"
-                        className="bg-indigo-650 hover:bg-indigo-550 text-white font-bold px-6 py-2.5 rounded-xl text-xs transition-all shadow-md shadow-indigo-650/10 uppercase tracking-wider"
-                      >
-                        Save
-                      </button>
-                    </form>
-                  </div>
-
-                </div>
-
-                {/* Right Column Tables */}
-                <div className="space-y-6">
-
-                  {/* Users List */}
-                  <div className="bg-slate-900/30 border border-slate-800/80 p-6 rounded-2xl backdrop-blur-md">
-                    <h3 className="font-bold text-sm text-slate-350 uppercase tracking-wider mb-4">Active User Register</h3>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-sm text-slate-300">
-                        <thead className="bg-slate-900/60 text-slate-400 text-xs font-bold uppercase">
-                          <tr>
-                            <th className="p-3 rounded-l-xl">Username</th>
-                            <th className="p-3 rounded-r-xl">Roles</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {users.map(user => (
-                            <tr key={user.id} className="border-b border-slate-800/30">
-                              <td className="p-3 font-semibold text-slate-200">{user.username}</td>
-                              <td className="p-3">
-                                {user.roles && user.roles.map(r => (
-                                  <span key={r.id} className="px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded-md text-[10px] font-semibold tracking-wide uppercase mr-1">
-                                    {r.name}
-                                  </span>
-                                ))}
-                              </td>
-                            </tr>
-                          ))}
-                          {users.length === 0 && (
-                            <tr>
-                              <td colSpan="2" className="text-center p-4 text-xs text-slate-500 italic">No registered users in SQLite.</td>
-                            </tr>
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  {/* Roles List */}
-                  <div className="bg-slate-900/30 border border-slate-800/80 p-6 rounded-2xl backdrop-blur-md">
-                    <h3 className="font-bold text-sm text-slate-350 uppercase tracking-wider mb-4">Authorized Roles</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {roles.map(role => (
-                        <span key={role.id} className="px-3.5 py-1.5 bg-slate-950 border border-slate-800 text-slate-400 rounded-xl text-xs font-semibold tracking-wider">
-                          🛡️ {role.name}
-                        </span>
-                      ))}
-                      {roles.length === 0 && <span className="text-xs text-slate-550 italic">No roles declared.</span>}
-                    </div>
-                  </div>
-
-                </div>
               </div>
             </div>
           )}
