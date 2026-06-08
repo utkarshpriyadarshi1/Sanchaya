@@ -5,3 +5,4 @@
 /frontend/src-tauri/target
 /frontend/dist
 /backend/target
+/.vscode
