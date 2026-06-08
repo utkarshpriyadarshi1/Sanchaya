@@ -1,3 +1,7 @@
 /node_modules
 /src/main/webapp/resources/dist
 /.idea
+/frontend/src-tauri/target-prod
+/frontend/src-tauri/target
+/frontend/dist
+/backend/target
