@@ -5,12 +5,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Application {
-    public static void main(String[] args) {
+    static {
         String homeDir = System.getProperty("user.home");
-        java.io.File appFolder = new java.io.File(homeDir, ".e-dastavej");
+        java.io.File appFolder = new java.io.File(homeDir, ".e-patra");
         if (!appFolder.exists()) {
             appFolder.mkdirs();
         }
+    }
+
+    public static void main(String[] args) {
+        String homeDir = System.getProperty("user.home");
+        java.io.File appFolder = new java.io.File(homeDir, ".e-patra");
         
         // Migrate existing database to user home if it exists locally
         java.io.File localDb = new java.io.File("file_metadata.db");

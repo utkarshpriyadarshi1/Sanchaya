@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:sqlite:${user.home}/.e-dastavej/file_metadata.db
+    url: jdbc:sqlite:${user.home}/.e-patra/file_metadata.db
     driver-class-name: org.sqlite.JDBC
     username: ""
     password: ""

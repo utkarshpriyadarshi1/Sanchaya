@@ -1,12 +1,12 @@
-# e-Dastavej User Guide
+# e-Patra User Guide
 
-Welcome to **e-Dastavej**, a local-first desktop document management system designed to run on a single workstation or shared network drive.
+Welcome to **e-Patra**, a local-first desktop document management system designed to run on a single workstation or shared network drive.
 
 ---
 
 ## Operating Modes
 
-e-Dastavej dynamically operates in one of two modes depending on backend availability:
+e-Patra dynamically operates in one of two modes depending on backend availability:
 
 1. **Live Local Mode:**
    * **When it occurs:** The Java backend server is running on `http://localhost:8080`.

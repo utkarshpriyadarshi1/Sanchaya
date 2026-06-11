@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 echo ===================================================
-echo     Starting e-Dastavej Development Environment    
+echo     Starting e-Patra Development Environment    
 echo ===================================================
 echo.
 
@@ -14,10 +14,10 @@ if %errorlevel% neq 0 (
 )
 
 echo [1/2] Launching Backend Service (Spring Boot)...
-start "e-Dastavej Backend" cmd /k "%MAVEN_CMD% -f backend/pom.xml spring-boot:run"
+start "e-Patra Backend" cmd /k "%MAVEN_CMD% -f backend/pom.xml spring-boot:run"
 
 echo [2/2] Launching Frontend Client (Tauri / React)...
-start "e-Dastavej Frontend" cmd /k "cd frontend && npm run tauri dev"
+start "e-Patra Frontend" cmd /k "cd frontend && npm run tauri dev"
 
 echo.
 echo [SUCCESS] Both development servers have been spawned in separate windows!

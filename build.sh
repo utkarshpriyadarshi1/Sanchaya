@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# build.sh - Compiles e-Dastavej Production Build on macOS/Linux.
+# build.sh - Compiles e-Patra Production Build on macOS/Linux.
 set -euo pipefail
 
 echo "==================================================="
-echo "       Compiling e-Dastavej Production Build       "
+echo "       Compiling e-Patra Production Build       "
 echo "==================================================="
 echo
 
@@ -52,6 +52,6 @@ echo
 echo "==================================================="
 echo "     [SUCCESS] Production build completed!         "
 echo "==================================================="
-echo "Backend Jar: backend/target/e-dastavej-1.0-SNAPSHOT.jar"
+echo "Backend Jar: backend/target/e-patra-1.0-SNAPSHOT.jar"
 echo "Frontend Standalone App: frontend/src-tauri/target/release/"
 echo

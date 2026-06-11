@@ -1,12 +1,12 @@
 # Standalone Desktop Architecture Guide
 
-This document outlines the architecture, data models, file organization patterns, and API interfaces for **e-Dastavej**.
+This document outlines the architecture, data models, file organization patterns, and API interfaces for **e-Patra**.
 
 ---
 
 ## Component Overview
 
-e-Dastavej is designed to run entirely on the local user machine using a hybrid desktop client-server architecture:
+e-Patra is designed to run entirely on the local user machine using a hybrid desktop client-server architecture:
 
 ```
 ┌───────────────────────────────────────┐
@@ -63,7 +63,7 @@ Backups are performed by physically copying the entire `organized/` file tree to
 
 ## Relational Database Schema
 
-The SQLite schema consists of the following key tables managed via JPA:
+The SQLite database file `file_metadata.db` is stored under `~/.e-patra/` in the user's home directory. The schema consists of the following key tables managed via JPA:
 
 ### `files` (FileInfo)
 Stores main document catalog entries and search indices.

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# clean.sh - Cleans e-Dastavej compile target files on macOS/Linux.
+# clean.sh - Cleans e-Patra compile target files on macOS/Linux.
 set -euo pipefail
 
 echo "==================================================="
-echo "          Cleaning e-Dastavej Workspace            "
+echo "          Cleaning e-Patra Workspace            "
 echo "==================================================="
 echo
 

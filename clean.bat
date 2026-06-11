@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 echo ===================================================
-echo           Cleaning e-Dastavej Workspace            
+echo           Cleaning e-Patra Workspace            
 echo ===================================================
 echo.
 

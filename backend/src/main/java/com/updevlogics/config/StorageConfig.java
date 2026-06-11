@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 @Configuration
 public class StorageConfig {
     
-    private static final String APP_DIR_NAME = ".e-dastavej";
+    private static final String APP_DIR_NAME = ".e-patra";
     
     public static String getAppHomePath() {
         return System.getProperty("user.home") + File.separator + APP_DIR_NAME;

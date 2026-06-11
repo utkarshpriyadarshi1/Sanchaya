@@ -11,12 +11,12 @@ if (-not (Test-Path $certsDir)) {
 }
 
 # 2. Check if certificate already exists in My store
-Write-Host "Searching for existing e-Dastavej Code Signing certificate..."
-$cert = Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object { $_.Subject -eq "CN=e-Dastavej Code Signing" } | Select-Object -First 1
+Write-Host "Searching for existing e-Patra Code Signing certificate..."
+$cert = Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object { $_.Subject -eq "CN=e-Patra Code Signing" } | Select-Object -First 1
 
 if ($null -eq $cert) {
     Write-Host "No existing certificate found. Generating a new self-signed Code Signing certificate..."
-    $cert = New-SelfSignedCertificate -Type CodeSigningCert -Subject "CN=e-Dastavej Code Signing" -KeyUsage DigitalSignature -FriendlyName "e-Dastavej Developer Cert" -CertStoreLocation "Cert:\CurrentUser\My"
+    $cert = New-SelfSignedCertificate -Type CodeSigningCert -Subject "CN=e-Patra Code Signing" -KeyUsage DigitalSignature -FriendlyName "e-Patra Developer Cert" -CertStoreLocation "Cert:\CurrentUser\My"
     Write-Host "Successfully generated certificate with Thumbprint: $($cert.Thumbprint)"
 } else {
     Write-Host "Found existing certificate with Thumbprint: $($cert.Thumbprint)"
@@ -28,7 +28,7 @@ if ($null -eq $cert) {
 
 # 4. Export certificate to certs\developer.pfx
 $pfxPath = Join-Path $certsDir "developer.pfx"
-$password = ConvertTo-SecureString "dastavej123" -AsPlainText -Force
+$password = ConvertTo-SecureString "patra123" -AsPlainText -Force
 Write-Host "Exporting certificate to $pfxPath..."
 if (Test-Path $pfxPath) {
     Remove-Item $pfxPath -Force
@@ -62,4 +62,4 @@ if (Test-Path $tauriConfPath) {
     Write-Warning "tauri.conf.json not found at $tauriConfPath. Skipping JSON auto-update."
 }
 
-Write-Host "e-Dastavej certificate configuration completed successfully!"
+Write-Host "e-Patra certificate configuration completed successfully!"

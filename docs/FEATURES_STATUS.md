@@ -1,6 +1,6 @@
-# e-Dastavej Features Status Registry
+# e-Patra Features Status Registry
 
-This document tracks the implemented features of the **e-Dastavej Document Management System** and documents the project's roadmap plans.
+This document tracks the implemented features of the **e-Patra Document Management System** and documents the project's roadmap plans.
 
 ---
 

@@ -1,6 +1,6 @@
-# e-Dastavej Document Management System
+# e-Patra - Document Organizer
 
-e-Dastavej is a secure, local-first document management system designed to organize, index, and archive local files. It utilizes a hybrid desktop client-server architecture to provide a native app experience while leveraging local system resources.
+e-Patra is a secure, local-first document management system designed to organize, index, and archive local files. It utilizes a hybrid desktop client-server architecture to provide a native app experience while leveraging local system resources.
 
 ---
 
@@ -32,7 +32,7 @@ e-dastavej/
 
 ## Prerequisites
 
-To run or build e-Dastavej locally, ensure you have the following installed:
+To run or build e-Patra locally, ensure you have the following installed:
 * **Java Development Kit (JDK) 17 or higher**
 * **Apache Maven 3.6+**
 * **Node.js 18+ and npm**

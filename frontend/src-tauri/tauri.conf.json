@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "e-Dastavej",
+    "productName": "e-Patra",
     "version": "1.0.1"
   },
   "tauri": {
@@ -28,7 +28,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.updevlogics.edastavej",
+      "identifier": "com.updevlogics.epatra",
       "longDescription": "",
       "macOS": {
         "frameworks": [],
@@ -52,7 +52,7 @@
         "fullscreen": false,
         "height": 768,
         "resizable": true,
-        "title": "e-Dastavej Document Management System",
+        "title": "e-Patra - Document Organizer",
         "width": 1024
       }
     ]

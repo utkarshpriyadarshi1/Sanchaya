@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 
 function App() {
   const [preferences, setPreferences] = useState(() => {
-    const saved = localStorage.getItem("edastavej_preferences");
+    const saved = localStorage.getItem("epatra_preferences");
     return saved ? JSON.parse(saved) : {
       defaultTab: "dashboard",
       autoBackup: false,
       backupInterval: "24",
       dedupStrategy: "sha256",
-      storageRoot: "C:\\Users\\utkar\\Desktop\\Projects\\e-dastavej\\organized",
-      ingestTmp: "C:\\Users\\utkar\\Desktop\\Projects\\e-dastavej\\uploads"
+      storageRoot: "C:\\Users\\utkar\\Desktop\\Projects\\e-patra\\organized",
+      ingestTmp: "C:\\Users\\utkar\\Desktop\\Projects\\e-patra\\uploads"
     };
   });
 
@@ -18,7 +18,7 @@ function App() {
   });
 
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("edastavej_theme") || "dark";
+    return localStorage.getItem("epatra_theme") || "dark";
   });
 
   const [isPrefOpen, setIsPrefOpen] = useState(false);
@@ -27,7 +27,7 @@ function App() {
 
   const [appLogs, setAppLogs] = useState(() => {
     return [
-      { timestamp: new Date().toISOString(), type: "info", message: "e-Dastavej Workstation Client initialized successfully." },
+      { timestamp: new Date().toISOString(), type: "info", message: "e-Patra Workstation Client initialized successfully." },
       { timestamp: new Date().toISOString(), type: "info", message: "Loaded preferences and active theme from local storage." }
     ];
   });
@@ -43,7 +43,7 @@ function App() {
   };
 
   useEffect(() => {
-    localStorage.setItem("edastavej_theme", theme);
+    localStorage.setItem("epatra_theme", theme);
     if (theme === "light") {
       document.documentElement.classList.add("light");
     } else {
@@ -165,8 +165,8 @@ function App() {
           freeSpace: 120000000000,  // 120 GB
           organizedSize: 3612500,   // ~3.6 MB
           uploadsSize: 1548200,     // ~1.5 MB
-          organizedPath: "C:\\Users\\utkar\\Desktop\\Projects\\e-dashtavej\\e-dastavej\\organized",
-          uploadsPath: "C:\\Users\\utkar\\Desktop\\Projects\\e-dashtavej\\e-dastavej\\uploads"
+          organizedPath: "C:\\Users\\utkar\\Desktop\\Projects\\e-patra\\organized",
+          uploadsPath: "C:\\Users\\utkar\\Desktop\\Projects\\e-patra\\uploads"
         });
         setFileMetadata([
           { id: 1, originalPath: "C:\\Downloads\\report.pdf", storedPath: "organized/pdf/2026/05/annual_report_2026.pdf", fileType: "pdf", year: "2026", month: "05", fileSize: 1048576, hash: "a3f5b9021876cd49b387ea1023a7" },
@@ -620,7 +620,7 @@ function App() {
         {/* Client Window Title */}
         <div className="text-xs font-semibold text-slate-400 tracking-wider flex items-center space-x-2">
           <i className="fa-solid fa-box-archive text-indigo-400 text-[11px]"></i>
-          <span>e-Dastavej Desktop Workstation Client</span>
+          <span>e-Patra Desktop Workstation Client</span>
         </div>
 
         {/* Top-Right Controls */}
@@ -683,8 +683,8 @@ function App() {
                 e
               </div>
               <div>
-                <h1 className="font-bold text-lg leading-none">e-Dastavej</h1>
-                <span className="text-xs text-slate-500 font-medium tracking-wide">LOCAL WORKSTATION</span>
+                <h1 className="font-bold text-lg leading-none">e-Patra</h1>
+                <span className="text-xs text-slate-500 font-medium tracking-wide">DOCUMENT ORGANIZER</span>
               </div>
             </div>
 
@@ -1676,7 +1676,7 @@ function App() {
               </button>
               <button
                 onClick={() => {
-                  localStorage.setItem("edastavej_preferences", JSON.stringify(preferences));
+                  localStorage.setItem("epatra_preferences", JSON.stringify(preferences));
                   setIsPrefOpen(false);
                   addLog("info", "Saved updated workstation preferences to localStorage.");
                 }}
@@ -1696,7 +1696,7 @@ function App() {
             <div className="flex justify-between items-center pb-4 border-b border-slate-800 mb-6 flex-shrink-0">
               <h3 className="text-xl font-bold flex items-center space-x-2.5">
                 <i className="fa-solid fa-circle-question text-indigo-400"></i>
-                <span>e-Dastavej Documentation & Help</span>
+                <span>e-Patra Documentation & Help</span>
               </h3>
               <button 
                 onClick={() => setIsHelpOpen(false)}
@@ -1714,7 +1714,7 @@ function App() {
                   <span>Quick Start Guide</span>
                 </h4>
                 <p className="text-xs text-slate-405">
-                  e-Dastavej is a secure, local-first document management system. Follow these basic workflows to manage files:
+                  e-Patra is a secure, local-first document management system. Follow these basic workflows to manage files:
                 </p>
                 <div className="bg-slate-955 border border-slate-800/60 p-4 rounded-xl space-y-2">
                   <div className="flex items-start space-x-2">
@@ -1767,7 +1767,7 @@ function App() {
                   <span>Deduplication & Hashing</span>
                 </h4>
                 <p className="text-xs text-slate-305 leading-relaxed">
-                  Every ingested file undergoes SHA-256 integrity signature calculations. If a document matches an existing hash registry, e-Dastavej blocks duplicate storage to save disk space and notifies the dashboard metrics.
+                  Every ingested file undergoes SHA-256 integrity signature calculations. If a document matches an existing hash registry, e-Patra blocks duplicate storage to save disk space and notifies the dashboard metrics.
                 </p>
               </section>
 
