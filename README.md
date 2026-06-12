@@ -54,13 +54,21 @@ e-Patra/
 │   ├── src-tauri/            # Tauri desktop configuration & Rust project wrapper
 │   ├── src/                  # React & Tailwind UI components
 │   └── package.json          # Node.js configuration
-├── packaging-builder/        # Cross-platform build and packaging scripts
+├── builder/                  # Cross-platform build and packaging scripts
 │   ├── build.js              # Node.js cross-platform build runner
 │   ├── clean.js              # Node.js cross-platform workspace cleaner
 │   ├── build.bat / build.sh  # OS-specific production packagers
 │   ├── clean.bat / clean.sh  # OS-specific workspace cleaners
-│   └── setup-cert.ps1        # Windows self-signed code signing certificate generator
+│   ├── increment_version.py  # Automation tool for version bumps
+│   └── setup-cert.ps1        # Windows self-signed certificate generator
 ├── docs/                     # Comprehensive architecture & user documentation
+│   ├── architecture-overview.md
+│   ├── database-schema.md
+│   ├── development-phases.md
+│   └── scalability-deployment.md
+├── schema/                   # Database initialization models
+│   ├── data.sql              # Static assets and template data
+│   └── schema.sql
 ├── build.bat / build.sh      # Root wrapper scripts for packaging (delegators)
 ├── clean.bat / clean.sh      # Root wrapper scripts for workspace cleanup (delegators)
 └── dev.bat / dev.sh          # One-click concurrent environment launchers
@@ -129,13 +137,13 @@ To compile production-ready installers and packages:
 * **Cross-Platform Node Script (Recommended):**
   Ensure you have Node.js and Cargo installed, then run:
   ```bash
-  node packaging-builder/build.js
+  node builder/build.js
   ```
   This will package the Java backend, run Tauri version adjustments, and output native desktop installers.
 * **On Windows:**
-  Run `.\build.bat` in the root (delegates to `packaging-builder/build.bat`).
+  Run `.\build.bat` in the root (delegates to `builder/build.bat`).
 * **On macOS/Linux:**
-  Run `./build.sh` in the root (delegates to `packaging-builder/build.sh`).
+  Run `./build.sh` in the root (delegates to `builder/build.sh`).
 
 ---
 
@@ -145,7 +153,7 @@ To remove Maven targets and Rust compiler cargo builds to free disk space:
 
 * **Cross-Platform Node Script (Recommended):**
   ```bash
-  node packaging-builder/clean.js
+  node builder/clean.js
   ```
 * **On Windows:**
   Run `.\clean.bat` in the root.
@@ -167,9 +175,10 @@ To remove Maven targets and Rust compiler cargo builds to free disk space:
 ## Documentation
 
 For deep dives into codebase structure and usage guides:
-* [Architecture Guide](docs/ARCHITECTURE.md) — Directory trees, DB schemas, and REST/WebSocket API endpoints.
-* [User Guide](docs/USER_GUIDE.md) — Step-by-step feature usage, troubleshooting, and setups.
-* [Feature Registry](docs/FEATURES_STATUS.md) — Detailed list of implemented and roadmap features.
+* [Architecture Overview](docs/architecture-overview.md) — Directory trees, topologies, and REST/WebSocket API endpoints.
+* [Database Schema](docs/database-schema.md) — Database configuration, tables, fields, and constraints.
+* [Development Phases](docs/development-phases.md) — Detailed list of implemented and roadmap features.
+* [Scalability & Deployment](docs/scalability-deployment.md) — Package compilation guides, Windows certificates, and scalability configurations.
 * [Contributing Guidelines](CONTRIBUTING.md) — Open source development guidelines.
 
 ---

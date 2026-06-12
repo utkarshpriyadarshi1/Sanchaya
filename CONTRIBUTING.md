@@ -38,8 +38,8 @@ We accept pull requests (PRs) for bug fixes and new features. To submit a PR:
    ```
 2. Set up your local development environment and write code.
 3. Verify that your changes build and run successfully:
-   * Run clean scripts to verify freshness: `node packaging-builder/clean.js`
-   * Run a production compilation test: `node packaging-builder/build.js`
+   * Run clean scripts to verify freshness: `node builder/clean.js`
+   * Run a production compilation test: `node builder/build.js`
 4. Commit your changes with clear, descriptive commit messages.
 5. Push to your fork and submit a PR to the `main` branch.
 
